@@ -1,38 +1,32 @@
-.App {
-  text-align: center;
+.dropDownClass {
+  background-color: none !important;
+  background-color: transparent !important;
+  border: none !important;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.dropDownClass::after {
+  display: none !important;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+/* .chatMessageClass::-webkit-scrollbar {
+  display: none !important;
+} */
+.channelclass::-webkit-scrollbar {
+  display: none !important;
+}
+.chatMessageClass::-webkit-scrollbar {
+  display: none !important;
+}
+/* @media (max-width: 1601px) {
+  .chatMessageClass {
+    height: 430px !important;
   }
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+@media (max-width: 1423px) {
+  .chatMessageClass {
+    height: 380px !important;
   }
 }
+@media (max-width: 1282px) {
+  .chatMessageClass {
+    height: 310px !important;
+  }
+} */
