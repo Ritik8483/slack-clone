@@ -19,7 +19,7 @@ const MessageInfo = styled.div`
     color: grey;
     font-weight: 300;
     margin-left: 4px;
-    font-size: 10px !important;
+    font-size: 12px !important;
   }
 `;
 
