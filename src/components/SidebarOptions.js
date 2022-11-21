@@ -43,7 +43,6 @@ const SidebarOptions = ({ Icon, title, addChannelOption, id }) => {
   };
   const roomId = useSelector((state) => state.slackReducer.roomId);
   const selectChannel = () => {
-    alert("channel Selected");
     if (id) {
       dispatch(storeRoomId(id));
     }

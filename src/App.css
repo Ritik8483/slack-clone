@@ -6,27 +6,14 @@
 .dropDownClass::after {
   display: none !important;
 }
-/* .chatMessageClass::-webkit-scrollbar {
-  display: none !important;
-} */
 .channelclass::-webkit-scrollbar {
   display: none !important;
+}
+@media (min-width:1279px) {
+  .channelclass{
+    height: 120px !important;
+  }
 }
 .chatMessageClass::-webkit-scrollbar {
   display: none !important;
 }
-/* @media (max-width: 1601px) {
-  .chatMessageClass {
-    height: 430px !important;
-  }
-}
-@media (max-width: 1423px) {
-  .chatMessageClass {
-    height: 380px !important;
-  }
-}
-@media (max-width: 1282px) {
-  .chatMessageClass {
-    height: 310px !important;
-  }
-} */

@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
-import CreateIcon from "@mui/icons-material/Create";
 import InsertCommentIcon from "@mui/icons-material/InsertComment";
 import InboxIcon from "@mui/icons-material/Inbox";
 import DraftsIcon from "@mui/icons-material/Drafts";
@@ -19,10 +18,8 @@ import { MdOutlineCreate } from "react-icons/md";
 import { useContextApi } from "../firebaseServices/firebaseServices";
 
 const SidebarContainer = styled.div`
-  height: 100vh;
+  height: calc(100vh - 70px);
   color: white;
-  /* width: max-content; */
-  /* padding-right: 30px; */
   background-color: var(--slack-color);
   border-top: 1px solid #49274b;
   min-width: 270px;
@@ -91,7 +88,6 @@ const Sidebar = () => {
                 : user?.email?.split("@")[0]}
             </h3>
           </SidebarInfo>
-          {/* <CreateIcon /> */}
           <MdOutlineCreate style={{ cursor: "pointer", fontSize: "20px" }} />
         </SidebarHeader>
         <SidebarOptions Icon={InsertCommentIcon} title="Threads" />
@@ -106,7 +102,7 @@ const Sidebar = () => {
         <SidebarOptions Icon={ExpandMoreIcon} title="Channels" />
         <hr />
           <SidebarOptions Icon={AddIcon} addChannelOption title="Add Channel" />
-        <div className="channelclass" style={{height:'200px',overflowY:'scroll'}}>
+        <div className="channelclass" style={{height:'175px',overflowY:'scroll'}}>
           {channels?.docs?.map((doc, index) => (
             <SidebarOptions key={doc.id} id={doc.id} title={doc.data().name} />
           ))}

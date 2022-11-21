@@ -18,7 +18,6 @@ const ChatContainer = styled.div`
 `;
 const Header = styled.div`
   display: flex;
-  /* width: 100%; */
   justify-content: space-between;
   padding: 20px;
   border-bottom: 1px solid lightgray;
@@ -46,7 +45,7 @@ const HeaderRight = styled.div`
 `;
 
 const ChatMessages = styled.div`
- height: 380px;
+ height: calc(100vh - 280px);
   overflow-y: auto;
 `;
 
@@ -104,7 +103,6 @@ const Chat = () => {
   return (
     <>
       <ChatContainer>
-        {/* <h1>Hello</h1> */}
         <Header>
           <HeaderLeft>
             <h4>
@@ -121,7 +119,6 @@ const Chat = () => {
         <ChatMessages
         ref={chatContainerRef}
           className="chatMessageClass"
-          // style={{ height: "375px", overflowY: "scroll" }}
         >
           {roomMessages?.docs?.map((doc) => {
             const { message, timestamp, user, userImage } = doc.data();

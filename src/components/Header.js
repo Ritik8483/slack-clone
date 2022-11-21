@@ -7,7 +7,6 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import AppBody from "./AppBody";
 import Sidebar from "./Sidebar";
 import Chat from "./Chat";
-import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { logoutMobileId } from "../redux/slackRedux";
 import { useNavigate } from "react-router-dom";
@@ -16,12 +15,12 @@ import { useContextApi } from "../firebaseServices/firebaseServices";
 
 const HeaderContainer = styled.div`
   display: flex;
-  /* position: fixed; */
   width: 100%;
-  /* width: fit-content; */
   align-items: center;
   justify-content: space-between;
   padding: 10px 0;
+  height: 70px;
+  object-fit: cover;
   background-color: var(--slack-color);
   color: #fff;
 `;
@@ -32,9 +31,6 @@ const HeaderLeft = styled.div`
   > .MuiSvgIcon-root:nth-child(1) {
     font-size: 40px;
     cursor: pointer;
-    /* :hover{
-        border: 10px solid blue;
-    } */
   }
   > .MuiSvgIcon-root:nth-child(2) {
     margin-left: 100px;
@@ -78,8 +74,7 @@ const HeaderAccountCircleIcon = styled(AccountCircleIcon)`
 `;
 
 const SidbarChatComponent = styled.div`
-height: 100%;
-/* overflow-y: auto; */
+  height: calc(100vh-700px);
   display: flex;
 `;
 
@@ -103,7 +98,12 @@ const Header = () => {
               id="dropdown-basic"
             >
               {user?.photoURL ? (
-                <img height='26' width='26' src={user?.photoURL} alt={user?.photoURL} />
+                <img
+                  height="26"
+                  width="26"
+                  src={user?.photoURL}
+                  alt={user?.photoURL}
+                />
               ) : (
                 <AccountCircleIcon />
               )}

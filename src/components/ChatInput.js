@@ -1,9 +1,6 @@
 import { Button } from "@mui/material";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { db } from "../firebaseConfig";
-import firebase from "firebase/compat/app";
-import { useContextApi } from "../firebaseServices/firebaseServices";
 
 const ChatInputContainer = styled.div`
   border-radius: 20px;
@@ -33,23 +30,7 @@ const ChatInput = ({
   textInput,
   setTextInput,
 }) => {
-  // const [textInput, setTextInput] = useState("");
-
-  const { user } = useContextApi();
-
-  // const sendMessage = (e) => {
-  //   e.preventDefault();
-  //   if (!channelId) {
-  //     return false;
-  //   }
-  //   db.collection("rooms").doc(channelId).collection("messages").add({
-  //     message: textInput,
-  //     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-  //     user: user?.displayName,
-  //     userImage: user?.photoURL,
-  //   });
-  //   setTextInput("");
-  // };
+  
   return (
     <div>
       <ChatInputContainer>
@@ -61,7 +42,6 @@ const ChatInput = ({
             placeholder={`Enter #${channelName}`}
           />
           <Button type="submit" onClick={(e) => sendMessage(e)}>
-            {/* {() => sendMessage()} */}
             Send
           </Button>
         </form>
