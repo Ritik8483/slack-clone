@@ -96,8 +96,6 @@ const Chat = () => {
     scrollToMyRef();
   }, [roomMessages?.docs.length]);
 
-  console.log("roomMessages?.docs?", roomMessages);
-
   return (
     <>
       <ChatContainer>
