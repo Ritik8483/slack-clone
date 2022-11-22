@@ -11,10 +11,10 @@ import { useContextApi } from "../firebaseServices/firebaseServices";
 import firebase from "firebase/compat/app";
 import { useState } from "react";
 import { useEffect } from "react";
+import { Oval } from "react-loader-spinner";
 
 const ChatContainer = styled.div`
   width: 100%;
- 
 `;
 const Header = styled.div`
   display: flex;
@@ -45,19 +45,17 @@ const HeaderRight = styled.div`
 `;
 
 const ChatMessages = styled.div`
- height: calc(100vh - 280px);
+  height: calc(100vh - 280px);
   overflow-y: auto;
 `;
 
 const Chat = () => {
-  const chatContainerRef=useRef();
+  const chatContainerRef = useRef();
   const [textInput, setTextInput] = useState("");
   const [textValue, setTextValue] = useState("");
   const [textMsg, setTextMsg] = useState("");
 
-
-
-  const {user}=useContextApi();
+  const { user } = useContextApi();
 
   const slackRoomId = useSelector((state) => state.slackReducer.roomId);
   const [roomDetails] = useDocument(
@@ -84,21 +82,21 @@ const Chat = () => {
     });
     setTextInput("");
     let messages = [textInput, textValue];
-    setTextMsg((prev)=>[prev,messages])
+    setTextMsg((prev) => [prev, messages]);
   };
-  
-  
 
   const scrollToMyRef = () => {
     const scroll =
-    chatContainerRef.current.scrollHeight -
-    chatContainerRef.current.clientHeight;
+      chatContainerRef.current.scrollHeight -
+      chatContainerRef.current.clientHeight;
     chatContainerRef.current.scrollTo(0, scroll);
   };
 
-  useEffect(()=>{
-    scrollToMyRef()
-  },[roomMessages?.docs.length])
+  useEffect(() => {
+    scrollToMyRef();
+  }, [roomMessages?.docs.length]);
+
+  console.log("roomMessages?.docs?", roomMessages);
 
   return (
     <>
@@ -106,7 +104,7 @@ const Chat = () => {
         <Header>
           <HeaderLeft>
             <h4>
-              <strong>#{roomDetails?.data().name}</strong>
+              <strong>#{roomDetails?.data()?.name || "guest"}</strong>
             </h4>
             <StarBorderOutlinedIcon />
           </HeaderLeft>
@@ -116,25 +114,43 @@ const Chat = () => {
             </p>
           </HeaderRight>
         </Header>
-        <ChatMessages
-        ref={chatContainerRef}
-          className="chatMessageClass"
-        >
-          {roomMessages?.docs?.map((doc) => {
-            const { message, timestamp, user, userImage } = doc.data();
-            return (
-              <Message
-                key={doc?.id}
-                message={message}
-                timestamp={timestamp}
-                userName={user}
-                userImage={userImage}
-              />
-            );
-          })}
-        </ChatMessages>
+        {roomMessages?.docs === "undefined" ? (
+          <>
+            <ChatMessages>
+              <div className="d-flex justify-content-center align-items-center">
+                <Oval
+                  height={50}
+                  width={50}
+                  color="#4fa94d"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                  visible={true}
+                  ariaLabel="oval-loading"
+                  secondaryColor="#4fa94d"
+                  strokeWidth={2}
+                  strokeWidthSecondary={2}
+                />
+              </div>
+            </ChatMessages>
+          </>
+        ) : (
+          <ChatMessages ref={chatContainerRef} className="chatMessageClass">
+            {roomMessages?.docs?.map((doc) => {
+              const { message, timestamp, user, userImage } = doc.data();
+              return (
+                <Message
+                  key={doc?.id}
+                  message={message}
+                  timestamp={timestamp}
+                  userName={user}
+                  userImage={userImage}
+                />
+              );
+            })}
+          </ChatMessages>
+        )}
         <ChatInput
-          channelName={roomDetails?.data().name}
+          channelName={roomDetails?.data()?.name || "guest"}
           channelId={slackRoomId}
           sendMessage={sendMessage}
           textInput={textInput}

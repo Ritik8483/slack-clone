@@ -1,16 +1,14 @@
-import { Formik } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { toast } from "react-toastify";
 import styled from "styled-components";
-import * as yup from "yup";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useContextApi } from "../../firebaseServices/firebaseServices";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
-import { useDispatch, useSelector } from "react-redux";
-import { storeMobileId, storeUserToken } from "../../redux/slackRedux";
+import { useDispatch } from "react-redux";
+import { storeUserToken } from "../../redux/slackRedux";
 
 const LoginContainer = styled.div`
   display: flex;
@@ -56,39 +54,29 @@ const SignUp = () => {
   const dispatch = useDispatch();
 
   const { signInWithNumber } = useContextApi();
-  const userTokenId = useSelector((state) => state.slackReducer.userToken);
-  // if (userTokenId) {
-  //   return <Navigate to="/slack-app" />;
-  // }
-  // const mobileID = useSelector((state) => state.slackReducer.mobileId);
-
   const submitDetails = async (event) => {
+    setValidated(true);
     event.preventDefault();
     const form = event.currentTarget;
+
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     }
     try {
+      if (phoneNo?.length === 13) {
+        setValidated(false);
+      }
       const response = await signInWithNumber(phoneNo);
       dispatch(storeUserToken(response?.verificationId));
       setConfirmResp(response);
-      // if(userTokenId){
-      //   toast.success("User logged in successfully")
-      // }
-      // else{
-      //   toast.success("OTP sent successfully")
-      // }
-      toast.success("OTP sent successfully")
-      setRedirect(true)
-      // toast.success(userTokenId ? "User logged in successfully" :"OTP sent successfully");
+      toast.success("OTP sent successfully");
+      setRedirect(true);
       setToggleOtp(!toggleOtp);
-      // navigate('/');
     } catch (error) {
       toast.error(error.message);
       console.log(error);
     }
-    setValidated(true);
   };
 
   const submitVerifyOtp = async (e) => {
@@ -99,15 +87,16 @@ const SignUp = () => {
     try {
       await confirmResp.confirm(otp);
       navigate("/slack-app");
-      // setToggleOtp(!toggleOtp);
     } catch (error) {
       toast.error(error.message);
     }
   };
 
-  // if (userTokenId) {
-  //   return <Navigate to="/slack-app" />;
-  // }
+  useEffect(() => {
+    if (phoneNo?.length === 13) {
+      setValidated(false);
+    }
+  }, [phoneNo]);
 
   return (
     <div>
@@ -137,7 +126,14 @@ const SignUp = () => {
                 value={phoneNo}
                 onChange={setPhoneNo}
               />
-              <div id="recaptcha-container"></div>
+              {validated ? (
+                <p style={{ color: "red", textAlign: "left" }}>
+                  Please enter the mobile no first!
+                </p>
+              ) : (
+                <></>
+              )}
+              {validated ? <></> : <div id="recaptcha-container"></div>}
             </Form.Group>
             <Button className="mt-4 w-100" type="submit">
               Send OTP

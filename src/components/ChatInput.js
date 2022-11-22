@@ -39,7 +39,7 @@ const ChatInput = ({
             value={textInput}
             onChange={(e) => setTextInput(e.target.value)}
             type="text"
-            placeholder={`Enter #${channelName}`}
+            placeholder={`Enter #${channelName || "Ritik"}`}
           />
           <Button type="submit" onClick={(e) => sendMessage(e)}>
             Send

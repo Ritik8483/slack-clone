@@ -41,7 +41,11 @@ const Message = ({ userImage, message, userName, timestamp }) => {
         )}
         <MessageInfo>
           <h4>
-            {userName ? userName : user?.phoneNumber? user?.phoneNumber?.split('+91')[1] : user?.email?.split("@")[0]}
+            {userName
+              ? userName
+              : user?.phoneNumber
+              ? user?.phoneNumber?.split("+91")[1]
+              : user?.email?.split("@")[0]}
             <span>{new Date(timestamp?.toDate()).toUTCString()}</span>
           </h4>
           <p>{message}</p>
